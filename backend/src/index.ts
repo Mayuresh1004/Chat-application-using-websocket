@@ -48,9 +48,9 @@ wss.on("connection", (socket) => {
 
     })
 
-    // socket.on("disconnect",()=>{
-    //     allSockets = allSockets.filter(x => x !== socket)
-    // })
+    socket.on("close", () => {
+        allSockets.delete(socket);
+    });
 
 })
 
