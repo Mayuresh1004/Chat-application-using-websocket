@@ -14,7 +14,7 @@ function App() {
   }, [messages]);
 
   useEffect(()=>{
-    const ws = new WebSocket("ws://localhost:8080")
+    const ws = new WebSocket("https://chat-application-using-websocket.onrender.com")
     ws.onmessage = (event) => {
       
       const data = JSON.parse(event.data)
