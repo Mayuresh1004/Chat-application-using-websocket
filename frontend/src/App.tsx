@@ -110,7 +110,9 @@ function App() {
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-800 text-white'
               }`}>
-                
+                {!message.isOwn && (
+                  <div className='text-xs text-gray-400 mb-1'>Anonymous</div>
+                )}
                 <span>{message.text}</span>
               </div>
             </div>
