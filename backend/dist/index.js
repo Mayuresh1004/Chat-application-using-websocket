@@ -15,10 +15,14 @@ wss.on("connection", (socket) => {
         }
         if (parsedMessage.type === "chat") {
             console.log("User wants to chat");
-            const currentUserRoom = Array.from(allSockets.values()).find(x => x.socket === socket)?.roomId;
+            const currentUserRoom = allSockets.get(socket)?.roomId;
             allSockets.forEach((user, ws) => {
                 if (user.roomId === currentUserRoom) {
-                    user.socket.send(parsedMessage.payload.message);
+                    user.socket.send(JSON.stringify({
+                        type: "chat",
+                        message: parsedMessage.payload.message,
+                        roomId: currentUserRoom
+                    }));
                 }
             });
         }
