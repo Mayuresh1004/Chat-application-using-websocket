@@ -9,6 +9,8 @@ function App() {
   const inputRef = useRef()
   const messagesEndRef = useRef(null);
   const [room,setRoom] = useState("Room 1")
+  const [userId] = useState(() => Math.random().toString(36).substring(7))
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -22,7 +24,11 @@ function App() {
       
       
         if (data.roomId === room) {
-        setMessages(m => [...m, data.message])
+         setMessages(m => [...m, {
+          text: data.message,
+          senderId: data.senderId,
+          isOwn: data.senderId === userId
+        }])
   
         }     
  }
@@ -48,7 +54,8 @@ function App() {
                 type: "chat",
                 payload: {
                   message: message,
-                  roomId: room
+                  roomId: room,
+                  senderId: userId
 
                 }
               }))
@@ -95,8 +102,17 @@ function App() {
           </div>
         ) : (
           messages.map((message, index) => (
-            <div key={index} className='bg-gray-800 text-white rounded-lg p-3 max-w-fit shadow-lg'>
-              <span>{message}</span>
+            <div key={index} className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}>
+              <div className={`rounded-lg p-3 max-w-[70%] shadow-lg ${
+                message.isOwn 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-800 text-white'
+              }`}>
+                {!message.isOwn && (
+                  <div className='text-xs text-gray-400 mb-1'>Anonymous</div>
+                )}
+                <span>{message.text}</span>
+              </div>
             </div>
           ))
         )}

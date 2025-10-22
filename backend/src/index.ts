@@ -41,7 +41,9 @@ wss.on("connection", (socket) => {
                     user.socket.send(JSON.stringify({
                         type: "chat",
                         message: parsedMessage.payload.message,
-                        roomId: currentUserRoom
+                        roomId: currentUserRoom,
+                        senderId: parsedMessage.payload.senderId 
+
                     }));
                 }
             });
