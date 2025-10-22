@@ -21,6 +21,7 @@ function App() {
       
       const data = JSON.parse(event.data)
       console.log(data.roomId);
+      console.log(userId);
       
       
         if (data.roomId === room) {
@@ -29,7 +30,8 @@ function App() {
           senderId: data.senderId,
           isOwn: data.senderId === userId
         }])
-  
+          console.log(data.senderId);
+          
         }     
  }
     wsRef.current = ws
@@ -108,9 +110,7 @@ function App() {
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-800 text-white'
               }`}>
-                {!message.isOwn && (
-                  <div className='text-xs text-gray-400 mb-1'>Anonymous</div>
-                )}
+                
                 <span>{message.text}</span>
               </div>
             </div>
